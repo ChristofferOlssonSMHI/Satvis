@@ -1,0 +1,30 @@
+[project]
+name = "satvis"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Christoffer Olsson", email = "christoffer.olsson@smhi.se" }
+]
+dependencies = [
+    "satpy>=0.47.0",
+    "pip>=24.0",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "ruff>=0.3.5",
+    "pytest>=8.1.1",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/satvis"]

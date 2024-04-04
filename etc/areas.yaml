@@ -1,0 +1,16 @@
+### +proj=stere +lat_0=57.3016625 +lon_0=11.297785 +ellps=WGS84
+
+western_seas_se:
+  description: 
+    The seas bordering Sweden's west coast
+  projection:
+    proj: stere
+    ellps: WGS84
+    lat_0: 57.3016625
+    lon_0: 11.297785
+  shape:
+    height: 1992
+    width: 1884
+  area_extent:
+    lower_left_xy: [-282586.412709, -290308.210120]
+    upper_right_xy: [282586.412709, 307359.029789]
