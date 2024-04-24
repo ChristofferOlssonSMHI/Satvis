@@ -1,6 +1,8 @@
 import geopandas as gpd
 import yaml
 
+import os
+
 # TODO Add export dir
 class DataHandler:
     def __init__(self):
