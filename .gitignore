@@ -12,3 +12,4 @@ wheels/
 # manually added
 /data
 /config/satvis.yaml
+src/ALGOTLvisTest
