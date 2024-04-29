@@ -14,3 +14,19 @@ western_seas_se:
   area_extent:
     lower_left_xy: [-282586.412709, -290308.210120]
     upper_right_xy: [282586.412709, 307359.029789]
+
+### +proj=stere +lat_0=57.435 +lon_0=18.674999999999997 +ellps=WGS84
+
+algotlTest:
+  description: algotlTest
+  projection:
+    proj: stere
+    ellps: WGS84
+    lat_0: 57.435
+    lon_0: 18.674999999999997
+  shape:
+    height: 664
+    width: 634
+  area_extent:
+    lower_left_xy: [-95043.345303, -98594.030733]
+    upper_right_xy: [95043.345303, 100717.352397]
