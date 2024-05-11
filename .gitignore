@@ -9,6 +9,12 @@ wheels/
 # venv
 .venv
 
+# lockfiles (because they are platform dependent)
+requirements-dev.lock
+requirements.lock
+
 # manually added
-/data
-/config/satvis.yaml
+config/satvis.yaml
+src/ALGOTLvisTest/
+src/satvistest/
+src/western_seas_algal_blooms/

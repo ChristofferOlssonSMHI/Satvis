@@ -1,0 +1,2 @@
+# area_days_gdf_list[0].plot(column="n_overlaps", categorical=True, legend=True, cmap="viridis", figsize=(10, 10))
+# area_days_gdf_list[1].plot(column="n_overlaps", categorical=True, legend=True, cmap="viridis", figsize=(10, 10))

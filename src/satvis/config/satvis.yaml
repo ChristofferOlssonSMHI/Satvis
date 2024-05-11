@@ -1,6 +1,0 @@
-# Enter the paths and rename to satvis.yaml
-
-data_directories:
-  sub_basin_shp: /run/media/janky/Ventoy/Shapefiler/Sub-basins_Baltic_Sea/Havsomr_SVAR_2016_3b.shp
-  cyano_data_shp:
-  sentinel2_data: /home/janky/Data/ALGOTL
