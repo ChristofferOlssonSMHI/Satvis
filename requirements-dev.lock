@@ -21,12 +21,9 @@ click==8.1.7
     # via dask
 cloudpickle==3.0.0
     # via dask
-colorama==0.4.6
-    # via click
-    # via pytest
 configobj==5.0.8
     # via pyresample
-dask==2024.4.0
+dask==2024.5.0
     # via satpy
 donfig==0.8.1.post0
     # via pyresample
@@ -35,7 +32,7 @@ fasteners==0.19
     # via zarr
 fsspec==2024.3.1
     # via dask
-idna==3.6
+idna==3.7
     # via requests
 importlib-metadata==7.1.0
     # via dask
@@ -64,23 +61,21 @@ packaging==24.0
     # via pytest
     # via satpy
     # via xarray
-pandas==2.2.1
+pandas==2.2.2
     # via xarray
-partd==1.4.1
+partd==1.4.2
     # via dask
 pillow==10.3.0
     # via satpy
     # via trollimage
-pip==24.0
-    # via satvis
-platformdirs==4.2.0
+platformdirs==4.2.1
     # via pooch
     # via pyresample
-pluggy==1.4.0
+pluggy==1.5.0
     # via pytest
 pooch==1.8.1
     # via satpy
-pykdtree==1.3.11
+pykdtree==1.3.12
     # via pyresample
     # via satpy
 pyorbital==1.8.2
@@ -88,9 +83,9 @@ pyorbital==1.8.2
 pyproj==3.6.1
     # via pyresample
     # via satpy
-pyresample==1.28.2
+pyresample==1.28.3
     # via satpy
-pytest==8.1.1
+pytest==8.2.0
 python-dateutil==2.9.0.post0
     # via pandas
 pytz==2024.1
@@ -103,14 +98,14 @@ pyyaml==6.0.1
 requests==2.31.0
     # via pooch
     # via pyorbital
-ruff==0.3.5
-satpy==0.47.0
+ruff==0.4.4
+satpy==0.48.0
     # via satvis
 scipy==1.13.0
     # via pyorbital
-setuptools==69.2.0
+setuptools==69.5.1
     # via pyresample
-shapely==2.0.3
+shapely==2.0.4
     # via pyresample
 six==1.16.0
     # via configobj
@@ -118,7 +113,7 @@ six==1.16.0
 toolz==0.12.1
     # via dask
     # via partd
-trollimage==1.23.1
+trollimage==1.23.2
     # via satpy
 trollsift==0.5.1
     # via satpy
@@ -128,7 +123,7 @@ urllib3==2.2.1
     # via requests
 xarray==2024.3.0
     # via satpy
-zarr==2.17.1
+zarr==2.18.0
     # via satpy
 zipp==3.18.1
     # via importlib-metadata
