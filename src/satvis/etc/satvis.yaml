@@ -1,0 +1,5 @@
+# Set GeoPandas engine as per recommendation in TODO add url
+# gpd.options.io_engine = "pyogrio"
+gpd:
+  options:
+    io-engine: pyogrio

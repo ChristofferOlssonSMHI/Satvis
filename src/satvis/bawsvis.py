@@ -2,7 +2,8 @@
 import geopandas as gpd
 import pandas as pd
 
-from data_handler import generate_filepaths
+from satvis.data_handler import generate_filepaths
+# from satvis import sub_basins, cyano_data_shp
 
 class BawsVis:
     def __init__(

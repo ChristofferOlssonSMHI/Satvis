@@ -5,24 +5,14 @@ import geopandas as gpd
 import pandas as pd
 import shapely
 
-import yaml
-
-
-# Set GeoPandas engine as per recommendation in TODO add url
-gpd.options.io_engine = "pyogrio"
-
-with open('../../config/satvis.yaml', 'r') as f:
-    config = yaml.safe_load(f)
-        
-# TODO Add export dir
-dir_dict = config['data_directories']
-sub_basin_shp = dir_dict['sub_basin_shp']
-cyano_data_shp = dir_dict['cyano_data_shp']
+# from satvis import cyano_data_shp
+from satpy import writers
 
 def generate_filepaths(
     directory, pattern='', not_pattern='DUMMY_PATTERN', 
-    pattern_list=[], endswith='', only_from_dir=True):
-    for path, subdir, fids in os.walk(directory):
+    pattern_list=None, endswith='', only_from_dir=True):
+    pattern_list = [] if pattern_list is None else pattern_list
+    for path, _subdir, fids in os.walk(directory):
         if only_from_dir:
             if path != directory:
                 continue
@@ -37,8 +27,29 @@ def generate_filepaths(
                 else:
                     yield os.path.abspath(os.path.join(path, f))
 
+# def make_cyano_season_geopackage(baws_data_path):
+#     """Creates a gpkg file with the daily shape-files produced by BAWS.
+    
+#     The file data are concatenated in a single GeoDataFrame spanning a 
+#     season.
+#     """
+#     # TODO Generalize
+#     # Read files into a list of tables
+#     # TODO Generator for self.cyano_data_shp
+#     data_files = generate_filepaths(directory=cyano_data_shp)
 
-
+#     for year in range(2002, 2024):
+#         year = str(year) # Move str to range()?
+#         geodataframes = []
+#         for cyano_data_file in data_files:
+#             gdf = gpd.read_file(cyano_data_file)
+#             # filename = os.path.basename(cyano_data_file)
+#             file_ts = pd.Timestamp(os.path.basename(cyano_data_file).split('.')[0].split('_')[-1])
+#             # For each table, add new column with timestamp (or original file name if useful)
+#             gdf.insert(0, 'date', file_ts)
+#             geodataframes.append(gdf)
+#         cyano_shp_dataframe = pd.concat(geodataframes)
+#         cyano_shp_dataframe.to_file(f'cyano_daymap_{year}.gpkg')
 
 def validate_data():
     """Validates the geometries of the cyanoacteria bloom GeoDataFrames
@@ -57,32 +68,6 @@ def cyano_season_second_pass(gdf):
     # Insert date column with extracted timestamp from filename column
     gdf.insert(1, 'date', gdf['from_file'].str.extract(str(r'_(\d{8})\.')))
     gdf['date'] = pd.to_datetime(gdf['date'])
-
-
-
-def make_cyano_season_geopackage(baws_data_path):
-    """Creates a gpkg file with the daily shape-files produced by BAWS.
-    
-    The file data are concatenated in a single GeoDataFrame spanning a 
-    season.
-    """
-    # TODO Generalize
-    # Read files into a list of tables
-    # TODO Generator for self.cyano_data_shp
-    data_files = generate_filepaths(directory=cyano_data_shp)
-
-    for year in range(2002, 2024):
-        year = str(year) # Move str to range()?
-        geodataframes = []
-        for cyano_data_file in data_files:
-            gdf = gpd.read_file(cyano_data_file)
-            # filename = os.path.basename(cyano_data_file)
-            file_ts = pd.Timestamp(os.path.basename(cyano_data_file).split('.')[0].split('_')[-1])
-            # For each table, add new column with timestamp (or original file name if useful)
-            gdf.insert(0, 'date', file_ts)
-            geodataframes.append(gdf)
-        cyano_shp_dataframe = pd.concat(geodataframes)
-        cyano_shp_dataframe.to_file(f'cyano_daymap_{year}.gpkg')
 
 def area_and_centroid_coords(geom):
     """returns a string of polygon area and centroid coordinates"""
@@ -122,7 +107,7 @@ def area_day_count(gdf):
     return area_days
 
 
-def make_basin_geopackage(self):
+def make_basin_geopackage(basins_shp_path):
     # TODO check structure of SVAR_2016
     """Method to recreate the Baltic Sea sub-basins GeoPackage 
     
@@ -150,37 +135,39 @@ def make_basin_geopackage(self):
     
     # TODO Rename sub_basin_shp to be easily identified
     # TODO add file as argument
-    gdf_basin = gpd.read_file(self.sub_basin_shp)
-    basin_geometries = gdf_basin[['BASIN_NR', 'geometry']]
+    basin_gdf = gpd.read_file(basins_shp_path)
+    print(basin_gdf)
+    basin_geometries = basin_gdf[['BASIN_NR', 'geometry']]
+    print(basin_geometries)
     basin_data = basin_geometries.dissolve(
         by='BASIN_NR', as_index=True)
     basin_data['basin_name'] = [
         basin_mapping_SVAR[item] for item in basin_data.index]
+    print(basin_data)
+    writers.to_gpkg(basin_data)
+    print('After to_gpkg')
     
-    # TODO save to gpkg instead, verify data structure
-    return basin_data
-
-def make_cyano_season_geopackages(data_files):
-    """Method to recreate the cyano bloom season GeoPackage files.
+# def make_cyano_season_geopackages(data_files):
+#     """Method to recreate the cyano bloom season GeoPackage files.
     
-    Only aggregates the raw data and doesn't perform any computations.
-    Its main function is to preserve the raw data produced using the 
-    prior method.
-    """
-    # TODO Generalize
-    # Read files into a list of tables
-    # TODO Generator for self.cyano_data_shp
-    data_files = generate_filepaths(directory=cyano_data_shp)
+#     Only aggregates the raw data and doesn't perform any computations.
+#     Its main function is to preserve the raw data produced using the 
+#     prior method.
+#     """
+#     # TODO Generalize
+#     # Read files into a list of tables
+#     # TODO Generator for self.cyano_data_shp
+#     data_files = generate_filepaths(directory=cyano_data_shp)
 
-    for year in range(2002, 2024):
-        year = str(year) # Move str to range()?
-        geodataframes = []
-        for cyano_data_file in data_files:
-            gdf = gpd.read_file(cyano_data_file)
-            # filename = os.path.basename(cyano_data_file)
-            file_ts = pd.Timestamp(os.path.basename(cyano_data_file).split('.')[0].split('_')[-1])
-            # For each table, add new column with timestamp (or original file name if useful)
-            gdf.insert(0, 'date', file_ts)
-            geodataframes.append(gdf)
-        cyano_shp_dataframe = pd.concat(geodataframes)
-        cyano_shp_dataframe.to_file(f'cyano_daymap_{year}.gpkg')
+#     for year in range(2002, 2024):
+#         year = str(year) # Move str to range()?
+#         geodataframes = []
+#         for cyano_data_file in data_files:
+#             gdf = gpd.read_file(cyano_data_file)
+#             # filename = os.path.basename(cyano_data_file)
+#             file_ts = pd.Timestamp(os.path.basename(cyano_data_file).split('.')[0].split('_')[-1])
+#             # For each table, add new column with timestamp (or original file name if useful)
+#             gdf.insert(0, 'date', file_ts)
+#             geodataframes.append(gdf)
+#         cyano_shp_dataframe = pd.concat(geodataframes)
+#         cyano_shp_dataframe.to_file(f'cyano_daymap_{year}.gpkg')

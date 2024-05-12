@@ -6,8 +6,9 @@ authors = [
     { name = "Christoffer Olsson", email = "christoffer.olsson@smhi.se" }
 ]
 dependencies = [
-    "satpy>=0.47.0",
-    "pip>=24.0",
+    "satpy>=0.48.0",
+    "donfig>=0.8.1.post0",
+    "geopandas>=0.14.4",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -19,8 +20,8 @@ build-backend = "hatchling.build"
 [tool.rye]
 managed = true
 dev-dependencies = [
-    "ruff>=0.3.5",
-    "pytest>=8.1.1",
+    "ruff>=0.4.4",
+    "pytest>=8.2.0",
 ]
 
 [tool.hatch.metadata]
@@ -28,3 +29,11 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/satvis"]
+
+[tool.ruff.lint]
+# Enable flake8-bugbear (`B`) rules, in addition to the defaults.
+select = ["E4", "E7", "E9", "F", "B"]
+
+[tool.ruff.format]
+# Use single quotes for non-triple-quoted strings.
+quote-style = "single"
