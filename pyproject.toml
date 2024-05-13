@@ -9,6 +9,7 @@ dependencies = [
     "satpy>=0.48.0",
     "donfig>=0.8.1.post0",
     "geopandas>=0.14.4",
+    "pyogrio>=0.8.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -29,6 +30,9 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/satvis"]
+
+[tool.pytest._ini_options]
+addopts = ["--import-mode=importlib"]
 
 [tool.ruff.lint]
 # Enable flake8-bugbear (`B`) rules, in addition to the defaults.

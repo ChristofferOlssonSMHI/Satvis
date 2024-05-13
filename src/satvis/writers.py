@@ -1,4 +1,5 @@
-from src.satvis._config import export_path
+import os
+from satvis._config import export_path
 # from data_handler import area_day_count
 
 # TODO Generalise gpkg writing. Make sure to do all needed calculations
@@ -14,7 +15,6 @@ from src.satvis._config import export_path
 #         area_days = area_day_count(bloom_gdf_season)
 #         area_days.to_file(f'{year}_bloom_day_count_geometries.gpkg')
 
-# TODO 
-def to_gpkg(df, filename=None):
-    filename = f'{df}.gpkg' if filename is None else filename
-    df.to_file(filename, export_path)
+def to_gpkg(gdf, filename, subdir=None):
+    filename = filename + '.gpkg' if not filename.endswith('.gpkg') else filename
+    gdf.to_file(os.path.join(export_path, filename), 'GPKG')
