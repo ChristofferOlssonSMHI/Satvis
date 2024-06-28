@@ -6,8 +6,7 @@ authors = [
     { name = "Christoffer Olsson", email = "christoffer.olsson@smhi.se" }
 ]
 dependencies = [
-    "satpy>=0.47.0",
-    "pip>=24.0",
+    "satpy>=0.48.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
